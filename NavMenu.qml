@@ -56,7 +56,6 @@ Rectangle {
         // Overrides
         color: toggle ? "#E81123" : "#16C60C"
         anchors.bottom: parent.bottom
-        state: "start"
 
         MouseArea {
             id: navToggleBtn
@@ -74,6 +73,80 @@ Rectangle {
                 PropertyChanges { target: navToggle; color: toggle ? "#C50F1F" : "#13A10E" }
             }
         ]
+
+        transitions: [
+                Transition {
+                    to: "hover"
+                    ColorAnimation { easing.type: Easing.OutCubic; duration: 500 }
+                },
+                Transition {
+                    to: ""
+                    ColorAnimation { easing.type: Easing.OutCubic; duration: 500 }
+                }
+        ]
+
+    }
+
+    // Minimize Button
+    MenuItem {
+        id: navMinimize
+        navIcon: "qrc:/img/icons/minimize.svg"
+        navIconColor: "#000"
+
+        // Overrides
+        anchors.bottom: navToggle.top
+
+        MouseArea {
+            id: navMinimizeBtn
+            anchors.fill: parent
+            hoverEnabled: true
+
+            onClicked: {
+
+            }
+        }
+
+        states: State {
+            name: "hover"; when: navMinimizeBtn.containsMouse
+            PropertyChanges { target: navMinimize; color: "#CCC" }
+        }
+
+        transitions: [
+                Transition {
+                    to: "hover"
+                    ColorAnimation { easing.type: Easing.OutCubic; duration: 500 }
+                },
+                Transition {
+                    to: ""
+                    ColorAnimation { easing.type: Easing.OutCubic; duration: 500 }
+                }
+        ]
+
+    }
+
+    // Settings Button
+    MenuItem {
+        id: navSettings
+        navIcon: "qrc:/img/icons/settings.svg"
+        navIconColor: "#000"
+
+        // Overrides
+        anchors.bottom: navMinimize.top
+
+        MouseArea {
+            id: navSettingsBtn
+            anchors.fill: parent
+            hoverEnabled: true
+
+            onClicked: {
+
+            }
+        }
+
+        states: State {
+            name: "hover"; when: navSettingsBtn.containsMouse
+            PropertyChanges { target: navSettings; color: "#CCC" }
+        }
 
         transitions: [
                 Transition {
