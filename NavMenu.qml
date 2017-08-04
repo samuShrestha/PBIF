@@ -1,4 +1,5 @@
 import QtQuick 2.0
+import QtQuick.Window 2.2
 
 Rectangle {
     id: navMenu
@@ -21,23 +22,28 @@ Rectangle {
             hoverEnabled: true
 
             onClicked: {
-
+                if (stack.currentItem.objectName !== "profileView") stack.replace(profileView, {"objectName": "profileView"});
             }
         }
 
-        states: State {
-            name: "hover"; when: navProfileBtn.containsMouse
-            PropertyChanges { target: navProfile; color: "#CCC" }
-        }
+        states: [
+            State {
+                name: "hover"; when: navProfileBtn.containsMouse
+                PropertyChanges { target: navProfile; color: "#CCC" }
+            }, State {
+                name: "clicked"; when: stack.currentItem.objectName === "profileView"
+                PropertyChanges { target: navProfile; color: "#CCC" }
+            }
+        ]
 
         transitions: [
                 Transition {
                     to: "hover"
-                    ColorAnimation { easing.type: Easing.OutCubic; duration: 500 }
+                    ColorAnimation { easing.type: Easing.OutCubic; duration: 350 }
                 },
                 Transition {
                     to: ""
-                    ColorAnimation { easing.type: Easing.OutCubic; duration: 500 }
+                    ColorAnimation { easing.type: Easing.InCubic; duration: 250 }
                 }
         ]
 
@@ -77,11 +83,11 @@ Rectangle {
         transitions: [
                 Transition {
                     to: "hover"
-                    ColorAnimation { easing.type: Easing.OutCubic; duration: 500 }
+                    ColorAnimation { easing.type: Easing.OutCubic; duration: 350 }
                 },
                 Transition {
                     to: ""
-                    ColorAnimation { easing.type: Easing.OutCubic; duration: 500 }
+                    ColorAnimation { easing.type: Easing.InCubic; duration: 250 }
                 }
         ]
 
@@ -114,11 +120,11 @@ Rectangle {
         transitions: [
                 Transition {
                     to: "hover"
-                    ColorAnimation { easing.type: Easing.OutCubic; duration: 500 }
+                    ColorAnimation { easing.type: Easing.OutCubic; duration: 350 }
                 },
                 Transition {
                     to: ""
-                    ColorAnimation { easing.type: Easing.OutCubic; duration: 500 }
+                    ColorAnimation { easing.type: Easing.InCubic; duration: 250 }
                 }
         ]
 
@@ -139,26 +145,59 @@ Rectangle {
             hoverEnabled: true
 
             onClicked: {
-
+                if (stack.currentItem.objectName !== "settingsView") stack.replace(settingsView, {"objectName": "settingsView"});
             }
         }
 
-        states: State {
-            name: "hover"; when: navSettingsBtn.containsMouse
-            PropertyChanges { target: navSettings; color: "#CCC" }
-        }
+        states: [
+            State {
+                name: "hover"; when: navSettingsBtn.containsMouse
+                PropertyChanges { target: navSettings; color: "#CCC" }
+            }, State {
+                name: "clicked"; when: stack.currentItem.objectName === "settingsView"
+                PropertyChanges { target: navSettings; color: "#CCC" }
+            }
+        ]
 
         transitions: [
                 Transition {
                     to: "hover"
-                    ColorAnimation { easing.type: Easing.OutCubic; duration: 500 }
+                    ColorAnimation { easing.type: Easing.OutCubic; duration: 350 }
                 },
                 Transition {
                     to: ""
-                    ColorAnimation { easing.type: Easing.OutCubic; duration: 500 }
+                    ColorAnimation { easing.type: Easing.InCubic; duration: 250 }
                 }
         ]
 
+    }
+
+    // Draggable Area
+    MouseArea {
+        anchors.left: parent.left
+        anchors.right: parent.right
+        anchors.top: navProfile.bottom
+        anchors.bottom: navSettings.top
+        property variant clickPos: "1,1"
+
+        onPressed: {
+            clickPos = Qt.point(mouse.x,mouse.y)
+        }
+
+        onPositionChanged: {
+            var delta = Qt.point(mouse.x-clickPos.x, mouse.y-clickPos.y)
+            var new_x = root.x + delta.x
+            var new_y = root.y + delta.y
+            if (new_y <= 0)
+                root.visibility = Window.Maximized
+            else
+            {
+                if (root.visibility === Window.Maximized)
+                    root.visibility = Window.Windowed
+                root.x = new_x
+                root.y = new_y
+            }
+        }
     }
 
 }

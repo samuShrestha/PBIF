@@ -4,21 +4,12 @@ import QtGraphicalEffects 1.0
 Rectangle {
     property alias navIcon: navIcon.source
     property alias navIconColor: iconColor.color
-    //property alias navIconFade: buttonFade.color
 
     id: button
 
     color: "#E6E6E6"
     width: parent.width
     height: parent.width
-
-//    // Hover Fade
-//    ColorOverlay {
-//        id: buttonFade
-
-//        anchors.fill: parent
-//        source: parent
-//    }
 
     Image {
         id: navIcon
@@ -29,9 +20,6 @@ Rectangle {
 
         sourceSize.width: navMenu.btnSize / 2; sourceSize.height: navMenu.btnSize / 2
         fillMode: Image.PreserveAspectFit
-
-        smooth: true
-        visible: false
     }
 
     // Icon Color
