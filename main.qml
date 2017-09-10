@@ -15,14 +15,23 @@ ApplicationWindow {
     visible: true
     title: qsTr("Username Validation Software - v1.0")
 
-    width: Screen.width / windowScaleFactor
-    height: Screen.height / windowScaleFactor
+    Component.onCompleted: {
+        width = Screen.width / windowScaleFactor
+        height = Screen.height / windowScaleFactor
 
-    minimumWidth: 0
-    minimumHeight: Screen.height * 0.35
+        root.minimumWidth = 0;
+        root.minimumHeight = Screen.height * 0.35;
 
-    maximumWidth: Screen.width * 0.75
-    maximumHeight: Screen.height * 0.75
+        root.maximumWidth = Screen.width * 0.5;
+        root.maximumHeight = Screen.height * 0.5;
+    }
+
+    Behavior on width {
+        NumberAnimation {
+            duration: 500
+            easing.type: Easing.OutCubic
+        }
+    }
 
     // C++ INTEGRATION
     BackEnd {
@@ -49,53 +58,23 @@ ApplicationWindow {
         anchors.left: parent.left
         anchors.leftMargin: (root.height < 540) ? 15 : 20
         anchors.verticalCenter: parent.verticalCenter
-        z: 1
+        z: 2
 
         onClicked: {
-            console.log(root.width);
-            if (state !== "rotated") root.windowWidth = root.width
             state == "rotated" ? state = "" : state = "rotated";
+            if (state != "rotated") windowWidth = root.width
+
             if (state == "rotated") {
-                minimizeWindow.running = true
                 root.flags = Qt.FramelessWindowHint
+                stack.currentItem.visible = false
+                console.log(windowWidth);
+                root.width = navMenu.btnSize
             } else {
-                maximizeWindow.running = true
                 root.flags = Qt.Window;
+                stack.currentItem.visible = true
+                console.log(windowWidth);
+                root.width = 1280
             }
-
-            stack.currentItem.visible = (state == "rotated") ? false : true
-        }
-
-        // Minimize Window Animation
-        NumberAnimation {
-            id: minimizeWindow
-            target: root
-            property: "width"
-            to: (navMenu.btnSize + screenToggle.minimizedMargin + screenToggle.width)
-            duration: 500
-            easing.type: Easing.OutCubic
-            running: false
-
-        }
-
-        // Maximize Window Animation
-        NumberAnimation {
-            id: maximizeWindow
-            target: root
-            property: "width"
-            to: 1280
-            duration: 500
-            easing.type: Easing.OutCubic
-            running: false
-
-        }
-
-        function minimizeWindow() {
-            root.windowWidth = root.width
-        }
-
-        function maximizeWindow() {
-
         }
 
         // Set Icon + Icon Color
@@ -131,6 +110,7 @@ ApplicationWindow {
         ]
     }
 
+
     // MAIN APPLICATION STACKVIEW
     StackView {
         id: stack
@@ -161,37 +141,19 @@ ApplicationWindow {
                 easing: Easing.InQuint
             }
         }
+
+        Component.onCompleted: console.log(stack.currentItem.objectName);
     }
 
     // VIEWS
-    Component {
-        id: profileView
 
-        Rectangle {
-            objectName: "profileView"
-            border.color: "red"
-
-            Text {
-                text: stack.currentItem.objectName
-                font.pointSize: 30
-                anchors.centerIn: parent
-            }
-        }
-
+    Component{
+        id:profileView
+        ProfileView{}
     }
 
-    Component {
-        id: settingsView
-
-        Rectangle {
-            objectName: "settingsView"
-            border.color: "red"
-
-            Text {
-                text: stack.currentItem.objectName
-                font.pointSize: 30
-                anchors.centerIn: parent
-            }
-        }
+    Component{
+        id:settingsView
+        SettingsView{}
     }
 }

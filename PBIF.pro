@@ -2,8 +2,7 @@ QT += qml quick
 
 CONFIG += c++11
 
-SOURCES += main.cpp \
-    backend.cpp
+SOURCES += main.cpp
 
 RESOURCES += qml.qrc
 
@@ -29,7 +28,6 @@ qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
-HEADERS += \
-    backend.h
+HEADERS +=
 
 DISTFILES +=

@@ -4,6 +4,9 @@
         <file>qtquickcontrols2.conf</file>
         <file>MenuItem.qml</file>
         <file>NavMenu.qml</file>
+        <file>ProfileView.qml</file>
+        <file>SettingsView.qml</file>
+        <file>AccItem.qml</file>
     </qresource>
     <qresource prefix="/img">
         <file>icons/minimize.svg</file>

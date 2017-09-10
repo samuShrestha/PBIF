@@ -108,7 +108,7 @@ Rectangle {
             hoverEnabled: true
 
             onClicked: {
-
+                root.showMinimized()
             }
         }
 
