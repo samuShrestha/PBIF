@@ -2,6 +2,8 @@ import QtQuick 2.0
 import QtQuick.Controls 2.0
 import QtQuick.Layouts 1.3
 
+import io.qt.webcam 1.0
+
 RowLayout {
     id: settingsView
     objectName: "settingsView"
@@ -75,6 +77,7 @@ RowLayout {
                 // WEBCAM
                 Rectangle {
                     id: webcam
+                    objectName: "webcamView"
 
                     anchors.horizontalCenter: parent.horizontalCenter
                     width: parent.width
@@ -82,6 +85,10 @@ RowLayout {
 
                     border.color: "black"
                     border.width: 1
+
+                    WebCam{
+                        anchors.fill: parent
+                    }
                 }
 
                 // MARKER TOGGLE BUTTONS

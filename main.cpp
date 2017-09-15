@@ -1,14 +1,14 @@
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
 
-#include "backend.h"
+#include "webcam.h"
 
 int main(int argc, char *argv[])
 {
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
     QGuiApplication app(argc, argv);
 
-    qmlRegisterType<BackEnd>("io.qt.examples.backend", 1, 0, "BackEnd");
+    qmlRegisterType<WebCam>("io.qt.webcam", 1, 0, "WebCam");
 
     QQmlApplicationEngine engine;
     engine.load(QUrl(QLatin1String("qrc:/main.qml")));

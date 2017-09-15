@@ -2,7 +2,10 @@ QT += qml quick
 
 CONFIG += c++11
 
-SOURCES += main.cpp
+SOURCES += main.cpp \
+    webcam.cpp \
+    ../../../../../dlib/dlib/all/source.cpp \
+    render_face.cpp
 
 RESOURCES += qml.qrc
 
@@ -28,6 +31,35 @@ qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
-HEADERS +=
+HEADERS += \
+    webcam.h
+
+# OpenCV Libs
+INCLUDEPATH += C:\\OpenCV-3.2.0\\opencv\\build\\include
+
+LIBS += -LC:\\OpenCV-3.2.0\\mybuild\\lib\\Debug \
+    -lopencv_core320d \
+    -lopencv_stitching320d \
+    -lopencv_videostab320d \
+    -lopencv_calib3d320d \
+    -lopencv_ts320d \
+    -lopencv_features2d320d \
+    -lopencv_objdetect320d \
+    -lopencv_highgui320d \
+    -lopencv_superres320d \
+    -lopencv_videoio320d \
+    -lopencv_shape320d \
+    -lopencv_photo320d \
+    -lopencv_imgcodecs320d \
+    -lopencv_video320d \
+    -lopencv_imgproc320d \
+    -lopencv_flann320d \
+    -lopencv_ml320d
+
+# Dlibs Libs
+#INCLUDEPATH += C:\\dlib-19.4\\include
+#LIBS += -LC:\dlib-19.4\lib -ldlib
+INCLUDEPATH += C:\dlib
+LIBS+= -lgdi32 -lcomctl32 -luser32 -lwinmm -lws2_32
 
 DISTFILES +=

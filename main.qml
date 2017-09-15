@@ -4,8 +4,6 @@ import QtQuick.Layouts 1.3
 import QtQuick.Window 2.2
 import QtGraphicalEffects 1.0
 
-import io.qt.examples.backend 1.0
-
 ApplicationWindow {
     property int windowScaleFactor: 2
     property int windowWidth
@@ -31,11 +29,6 @@ ApplicationWindow {
             duration: 500
             easing.type: Easing.OutCubic
         }
-    }
-
-    // C++ INTEGRATION
-    BackEnd {
-        id: backend
     }
 
     // NAVIGATION MENU
@@ -67,12 +60,10 @@ ApplicationWindow {
             if (state == "rotated") {
                 root.flags = Qt.FramelessWindowHint
                 stack.currentItem.visible = false
-                console.log(windowWidth);
                 root.width = navMenu.btnSize
             } else {
                 root.flags = Qt.Window;
                 stack.currentItem.visible = true
-                console.log(windowWidth);
                 root.width = 1280
             }
         }
@@ -142,7 +133,7 @@ ApplicationWindow {
             }
         }
 
-        Component.onCompleted: console.log(stack.currentItem.objectName);
+        //Component.onCompleted: console.log(stack.currentItem.objectName);
     }
 
     // VIEWS
