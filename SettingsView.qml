@@ -87,6 +87,8 @@ RowLayout {
                     border.width: 1
 
                     WebCam{
+                        id: webCamSource
+                        objectName: "webCam"
                         anchors.fill: parent
                     }
                 }

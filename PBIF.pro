@@ -5,7 +5,8 @@ CONFIG += c++11
 SOURCES += main.cpp \
     webcam.cpp \
     ../../../../../dlib/dlib/all/source.cpp \
-    render_face.cpp
+    render_face.cpp \
+    pbif.cpp
 
 RESOURCES += qml.qrc
 
@@ -32,7 +33,8 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 HEADERS += \
-    webcam.h
+    webcam.h \
+    pbif.h
 
 # OpenCV Libs
 INCLUDEPATH += C:\\OpenCV-3.2.0\\opencv\\build\\include

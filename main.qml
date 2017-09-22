@@ -4,14 +4,21 @@ import QtQuick.Layouts 1.3
 import QtQuick.Window 2.2
 import QtGraphicalEffects 1.0
 
+import io.qt.webcam 1.0
+
 ApplicationWindow {
     property int windowScaleFactor: 2
     property int windowWidth
 
     // WINDOW INITIALIZATION
     id: root
+    objectName: "root"
     visible: true
     title: qsTr("Username Validation Software - v1.0")
+
+    onClosing: {
+        pbif.exit()
+    }
 
     Component.onCompleted: {
         width = Screen.width / windowScaleFactor
@@ -105,7 +112,8 @@ ApplicationWindow {
     // MAIN APPLICATION STACKVIEW
     StackView {
         id: stack
-        initialItem: profileView
+        objectName: "stackView"
+        initialItem: settingsViewComponent
 
         // ANCHORS
         anchors.left: screenToggle.right
@@ -139,12 +147,12 @@ ApplicationWindow {
     // VIEWS
 
     Component{
-        id:profileView
+        id:profileViewComponent
         ProfileView{}
     }
 
     Component{
-        id:settingsView
+        id:settingsViewComponent
         SettingsView{}
     }
 }

@@ -11,6 +11,7 @@
 #include <QObject>
 #include <QPainter>
 #include <QPixmap>
+#include <QImage>
 
 #include <QThread>
 #include <QDebug>
@@ -26,6 +27,8 @@
 #include <dlib/image_processing.h>
 #include <dlib/gui_widgets.h>
 
+#include <pbif.h>
+
 class WebCam : public QQuickPaintedItem
 {
     Q_OBJECT
@@ -33,29 +36,17 @@ public:
     WebCam(QQuickItem *parent = 0);
     void paint(QPainter *painter);
 
-    // Load face detection and pose estimation models.
-    dlib::frontal_face_detector detector = dlib::get_frontal_face_detector();
-    dlib::shape_predictor pose_model;
-
-    cv::Mat src, im;
-    cv::Mat im_small, im_display;
-
-    std::vector<dlib::rectangle> faces;
-
-    std::vector<cv::Point2d> poseEstimation;
-
     QImage qimgDisplay;
 
-private:
-    cv::VideoCapture cap; // Capture object to use w/ webcam
-    QImage WebCam::convertOpenCVMatToQtQImage(cv::Mat mat);
+    static QImage convertOpenCVMatToQtQImage(cv::Mat mat);
 
-    QTimer* processLoopTimer;                 // timer for processFrameAndUpdateGUI()
+private:
 
 signals:
 
 public slots:
-    void processFrameAndUpdateGUI();
+    void updateFrame();
+
 };
 
 #endif // WEBCAM_H
