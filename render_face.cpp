@@ -1,12 +1,12 @@
-#ifndef BIGVISION_RENDER_FACE_H_
-#define BIGVISION_RENDER_FACE_H_
+#ifndef RENDER_FACE_H_
+#define RENDER_FACE_H_
 
 #include <dlib/image_processing/frontal_face_detector.h>
 #include <opencv2\highgui\highgui.hpp>
 #include <opencv2\core\core.hpp>
 #include <opencv\cv.hpp>
 
-void draw_polyline(cv::Mat &img, const dlib::full_object_detection& d, const int start, const int end, bool isClosed = false)
+static void draw_polyline(cv::Mat &img, const dlib::full_object_detection& d, const int start, const int end, bool isClosed = false)
 {
     std::vector <cv::Point> points;
     for (int i = start; i <= end; ++i)
@@ -17,7 +17,7 @@ void draw_polyline(cv::Mat &img, const dlib::full_object_detection& d, const int
 
 }
 
-void render_face (cv::Mat &img, const dlib::full_object_detection& d)
+static void render_face (cv::Mat &img, const dlib::full_object_detection& d)
 {
     DLIB_CASSERT
     (
@@ -39,4 +39,4 @@ void render_face (cv::Mat &img, const dlib::full_object_detection& d)
 
 }
 
-#endif // BIGVISION_RENDER_FACE_H_
+#endif // RENDER_FACE_H_

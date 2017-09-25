@@ -183,7 +183,6 @@ Rectangle {
 
         onPressed: {
             clickPos = Qt.point(mouse.x,mouse.y)
-            console.log(clickPos)
         }
 
         onPositionChanged: {

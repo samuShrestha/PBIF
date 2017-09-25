@@ -32,6 +32,11 @@ int main(int argc, char *argv[])
 
     QObject *togglePose = engine.rootObjects().at(0)->findChild<QObject*>("settingsView")->findChild<QObject*>("togglePoseTracker");
     qDebug() << togglePose->property("checked").toBool();
+    pbif.setTogglePose(togglePose);
+
+    QObject *toggleEyes = engine.rootObjects().at(0)->findChild<QObject*>("settingsView")->findChild<QObject*>("toggleEyeTracker");
+    qDebug() << togglePose->property("checked").toBool();
+    pbif.setToggleEyes(toggleEyes);
 
     try{
         pbif.exec();

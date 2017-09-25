@@ -29,6 +29,10 @@ public:
     enum AppState { tracking, idle };
     AppState applicationState;
 
+    void setWebCam(QObject *webCam);
+    void setTogglePose(QObject *togglePose);
+    void setToggleEyes(QObject *toggleEyes);
+
     cv::VideoCapture cap; // Capture object to use w/ webcam
 
     // Load face detection and pose estimation models.
@@ -43,12 +47,19 @@ public:
 
     std::vector<cv::Point2d> poseEstimation;
 
-    void setWebCam(QObject *webCam);
+    int blinkFrameCount;
+    int totalBlinks;
+
+    double eyeAspectRatio(std::vector<cv::Point2d> eye);
+
 
 private:
     QGuiApplication *app;
 
     QTimer *processLoopTimer;
+
+    QObject *togglePose;
+    QObject *toggleEyes;
 
     bool stop;
 
