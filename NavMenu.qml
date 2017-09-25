@@ -22,7 +22,8 @@ Rectangle {
             hoverEnabled: true
 
             onClicked: {
-                if (stack.currentItem.objectName !== "profileView") stack.replace(profileView, {"objectName": "profileView"});
+                profileLogin.show();
+                //if (stack.currentItem.objectName !== "profileView") stack.replace(profileViewComponent, {"objectName": "profileView"});
             }
         }
 
@@ -131,57 +132,58 @@ Rectangle {
     }
 
     // Settings Button
-    MenuItem {
-        id: navSettings
-        navIcon: "qrc:/img/icons/settings.svg"
-        navIconColor: "#000"
+//    MenuItem {
+//        id: navSettings
+//        navIcon: "qrc:/img/icons/settings.svg"
+//        navIconColor: "#000"
 
-        // Overrides
-        anchors.bottom: navMinimize.top
+//        // Overrides
+//        anchors.bottom: navMinimize.top
 
-        MouseArea {
-            id: navSettingsBtn
-            anchors.fill: parent
-            hoverEnabled: true
+//        MouseArea {
+//            id: navSettingsBtn
+//            anchors.fill: parent
+//            hoverEnabled: true
 
-            onClicked: {
-                if (stack.currentItem.objectName !== "settingsView") stack.replace(settingsView, {"objectName": "settingsView"});
-            }
-        }
+//            onClicked: {
+//                if (stack.currentItem.objectName !== "settingsView") stack.replace(settingsViewComponent, {"objectName": "settingsView"});
+//            }
+//        }
 
-        states: [
-            State {
-                name: "hover"; when: navSettingsBtn.containsMouse
-                PropertyChanges { target: navSettings; color: "#CCC" }
-            }, State {
-                name: "clicked"; when: stack.currentItem.objectName === "settingsView"
-                PropertyChanges { target: navSettings; color: "#CCC" }
-            }
-        ]
+//        states: [
+//            State {
+//                name: "hover"; when: navSettingsBtn.containsMouse
+//                PropertyChanges { target: navSettings; color: "#CCC" }
+//            }, State {
+//                name: "clicked"; when: stack.currentItem.objectName === "settingsView"
+//                PropertyChanges { target: navSettings; color: "#CCC" }
+//            }
+//        ]
 
-        transitions: [
-                Transition {
-                    to: "hover"
-                    ColorAnimation { easing.type: Easing.OutCubic; duration: 350 }
-                },
-                Transition {
-                    to: ""
-                    ColorAnimation { easing.type: Easing.InCubic; duration: 250 }
-                }
-        ]
+//        transitions: [
+//                Transition {
+//                    to: "hover"
+//                    ColorAnimation { easing.type: Easing.OutCubic; duration: 350 }
+//                },
+//                Transition {
+//                    to: ""
+//                    ColorAnimation { easing.type: Easing.InCubic; duration: 250 }
+//                }
+//        ]
 
-    }
+//    }
 
     // Draggable Area
     MouseArea {
         anchors.left: parent.left
         anchors.right: parent.right
         anchors.top: navProfile.bottom
-        anchors.bottom: navSettings.top
+        anchors.bottom: navMinimize.top
         property variant clickPos: "1,1"
 
         onPressed: {
             clickPos = Qt.point(mouse.x,mouse.y)
+            console.log(clickPos)
         }
 
         onPositionChanged: {

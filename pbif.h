@@ -56,6 +56,8 @@ signals:
     void frameUpdated();
 public slots:
     void processFrameAndUpdateGUI();
+    //void togglePose();
+    //void toggleEyeMarkers();
 };
 
 #endif // APP_H

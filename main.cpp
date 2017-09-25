@@ -30,6 +30,8 @@ int main(int argc, char *argv[])
     QObject *webCam = engine.rootObjects().at(0)->findChild<QObject*>("settingsView")->findChild<QObject*>("webCam");
     pbif.setWebCam(webCam);
 
+    QObject *togglePose = engine.rootObjects().at(0)->findChild<QObject*>("settingsView")->findChild<QObject*>("togglePoseTracker");
+    qDebug() << togglePose->property("checked").toBool();
 
     try{
         pbif.exec();

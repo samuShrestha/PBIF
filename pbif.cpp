@@ -78,12 +78,6 @@ void PBIF::processFrameAndUpdateGUI() {
     cv::resize(im, PBIF::im_display, cv::Size(), 0.5, 0.5);
 
     emit frameUpdated();
-
-    //webCam->updateFrame(im_display);
-    //qDebug() << webCam->testing;
-    //webCam->update();
-    //WebCam::updateFrame(im_display);
-    //WebCam::update();
 }
 
 

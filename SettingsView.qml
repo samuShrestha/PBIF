@@ -64,7 +64,7 @@ RowLayout {
             // WEBCAM VIEW
             Rectangle{
                 id: webcamView
-                property bool show: false
+                property bool show: true
 
                 width: parent.width
                 height: show ? webcam.height + toggleBtns.height + 15 : 0
@@ -81,7 +81,7 @@ RowLayout {
 
                     anchors.horizontalCenter: parent.horizontalCenter
                     width: parent.width
-                    height: 300
+                    height: (3*width)/4
 
                     border.color: "black"
                     border.width: 1
@@ -104,12 +104,20 @@ RowLayout {
                     Button{
                         id: togglePoseTracker
                         objectName: "togglePoseTracker"
+                        checkable: true
+
                         text: "Pose Estimation"
+
+                        //onClicked: checked ? pbif.displayPose() : pbif.hidePose()
                     }
                     Button{
-                        id: toggleEyeMarkers
-                        objectName: "toggleEyeMarkers"
+                        id: toggleEyeTracker
+                        objectName: "toggleEyeTracker"
+                        checkable: true
+
                         text: "Eye Markers"
+
+                        //onClicked: checked ? pbif.displayEyeMarkers() : pbif.hideEyeMarkers()
                     }
                 }
             }

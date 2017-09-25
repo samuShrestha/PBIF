@@ -15,7 +15,6 @@ void WebCam::updateFrame() {
 void WebCam::paint(QPainter *painter)
 {
     painter->drawImage(this->boundingRect(), qimgDisplay);
-    std::cout << "PBIF: IMAGE DRAWN";
 }
 
 QImage WebCam::convertOpenCVMatToQtQImage(cv::Mat mat) {
