@@ -13,29 +13,27 @@ using namespace std;
 
 cv::Mat PBIF::im_display;
 
-PBIF::PBIF(QObject *parent, QGuiApplication *app) : QObject(parent)
+PBIF::PBIF(QObject *parent, QGuiApplication *app, QQmlApplicationEngine *engine) : QObject(parent)
 {
     this->app               = app;
+    this->engine            = engine;
+
     this->applicationState  = idle;
     this->stop              = false;
+}
+
+void PBIF::loadQMLComponents() {
+    webCam = engine->rootObjects().at(0)->findChild<QObject*>("settingsView")->findChild<QObject*>("webCam");
+    togglePose = engine->rootObjects().at(0)->findChild<QObject*>("settingsView")->findChild<QObject*>("togglePoseTracker");
+    toggleEyes = engine->rootObjects().at(0)->findChild<QObject*>("settingsView")->findChild<QObject*>("toggleEyeTracker");
+
+    connect(this, SIGNAL(frameUpdated()), webCam, SLOT(updateFrame()));
 }
 
 void PBIF::exit() {
     qDebug() << "PBIF: EXIT METHOD CALLED";
     stop = true;
     std::exit(0);
-}
-
-void PBIF::setWebCam(QObject *webCam) {
-    connect(this, SIGNAL(frameUpdated()), webCam, SLOT(updateFrame()));
-}
-
-void PBIF::setTogglePose(QObject *togglePose) {
-    this->togglePose = togglePose;
-}
-
-void PBIF::setToggleEyes(QObject *toggleEyes) {
-    this->toggleEyes = toggleEyes;
 }
 
 void PBIF::exec() {
@@ -66,11 +64,10 @@ void PBIF::exec() {
 
     // LOAD SETTINGS
 
+    // QT EVENT LOOP
     while (!stop) {
         // QT EVENT LOOP
         app->processEvents();
-
-
     };
 
 }

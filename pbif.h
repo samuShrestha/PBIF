@@ -2,6 +2,7 @@
 #define APP_H
 
 #include <QObject>
+#include <QQmlApplicationEngine>
 #include <QQmlEngine>
 #include <QQmlComponent>
 #include <QQuickPaintedItem>
@@ -22,16 +23,14 @@
 class PBIF : public QObject {
     Q_OBJECT
 public:
-    explicit PBIF(QObject *parent = nullptr, QGuiApplication *app = nullptr);
+    explicit PBIF(QObject *parent = nullptr, QGuiApplication *app = nullptr, QQmlApplicationEngine *engine = nullptr);
     void exec();
     Q_INVOKABLE void exit();
 
     enum AppState { tracking, idle };
     AppState applicationState;
 
-    void setWebCam(QObject *webCam);
-    void setTogglePose(QObject *togglePose);
-    void setToggleEyes(QObject *toggleEyes);
+    void loadQMLComponents();
 
     cv::VideoCapture cap; // Capture object to use w/ webcam
 
@@ -54,12 +53,16 @@ public:
 
 
 private:
-    QGuiApplication *app;
+    QGuiApplication* app;
+    QQmlApplicationEngine* engine;
 
-    QTimer *processLoopTimer;
+    QObject* webCam;
+    QObject* togglePose;
+    QObject* toggleEyes;
 
-    QObject *togglePose;
-    QObject *toggleEyes;
+    QTimer* processLoopTimer;
+
+
 
     bool stop;
 
