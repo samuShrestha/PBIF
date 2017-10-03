@@ -9,6 +9,7 @@
 #include <QGuiApplication>
 #include <QDebug>
 #include <QTimer>
+#include <QThread>
 
 #include <dlib/opencv.h>
 #include <opencv2/opencv.hpp>
@@ -19,6 +20,8 @@
 
 #include <iostream>
 #include <stdio.h>
+
+#include "imageprocessingworker.h"
 
 class PBIF : public QObject {
     Q_OBJECT
@@ -44,7 +47,7 @@ public:
 
     std::vector<dlib::rectangle> faces;
 
-    std::vector<cv::Point2d> poseEstimation;
+    static std::vector<cv::Point2d> poseEstimation;
 
     int blinkFrameCount;
     int totalBlinks;
@@ -62,14 +65,11 @@ private:
 
     QTimer* processLoopTimer;
 
-
-
     bool stop;
 
 signals:
     void frameUpdated();
 public slots:
-    void processFrameAndUpdateGUI();
     //void togglePose();
     //void toggleEyeMarkers();
 };

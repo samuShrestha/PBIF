@@ -6,7 +6,8 @@ SOURCES += main.cpp \
     webcam.cpp \
     ../../../../../dlib/dlib/all/source.cpp \
     render_face.cpp \
-    pbif.cpp
+    pbif.cpp \
+    imageprocessingworker.cpp
 
 RESOURCES += qml.qrc
 
@@ -34,7 +35,8 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 HEADERS += \
     webcam.h \
-    pbif.h
+    pbif.h \
+    imageprocessingworker.h
 
 # OpenCV Libs
 INCLUDEPATH += C:\\OpenCV-3.2.0\\opencv\\build\\include

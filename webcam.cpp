@@ -8,7 +8,7 @@ WebCam::WebCam(QQuickItem *parent)
 }
 
 void WebCam::updateFrame() {
-    qimgDisplay = WebCam::convertOpenCVMatToQtQImage(PBIF::im_display);
+    qimgDisplay = WebCam::convertOpenCVMatToQtQImage(imageProcessingWorker::im_display);
     update();
 }
 
