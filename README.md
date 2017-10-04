@@ -11,4 +11,4 @@ PBIF is an application developed for the 2017 [Young Scientist Challenge](https:
 ## Made With
 + [OpenCV](http://opencv.org/): An open-source computer vision library
 + [Dlib](http://dlib.net/): A modern machine learning toolkit
-+ [Qt](https://www.qt.io/): A cross-platform SDK
++ [Qt](https://www.qt.io/): A cross-platform SDK for developing versatile C++ applications

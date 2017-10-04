@@ -12,11 +12,11 @@ using namespace std;
 
 cv::Mat imageProcessingWorker::im_display;
 
-imageProcessingWorker::imageProcessingWorker(QObject *webCam,  QObject *togglePose, QObject *toggleEyes)
+imageProcessingWorker::imageProcessingWorker(QQmlApplicationEngine* engine)
 {
-    this->webCam = webCam;
-    this->togglePose = togglePose;
-    this->toggleEyes = toggleEyes;
+    this->webCam = engine->rootObjects().at(0)->findChild<QObject*>("settingsView")->findChild<QObject*>("webCam");
+    this->togglePose = engine->rootObjects().at(0)->findChild<QObject*>("settingsView")->findChild<QObject*>("togglePoseTracker");
+    this->toggleEyes = engine->rootObjects().at(0)->findChild<QObject*>("settingsView")->findChild<QObject*>("toggleEyeTracker");
 }
 
 imageProcessingWorker::~imageProcessingWorker()
@@ -68,6 +68,7 @@ double imageProcessingWorker::eyeAspectRatio(std::vector<cv::Point2d> eye) {
 }
 
 void imageProcessingWorker::initialize() {
+
     // INITIALIZE WEBCAM INTERFACE
     cap.open(0);
 
@@ -97,12 +98,6 @@ void imageProcessingWorker::initialize() {
 }
 
 void imageProcessingWorker::process() {
-    callsToUpdate++;
-    if (callsToUpdate % 10 == 0) {
-        callsToUpdateSecs++;
-        qDebug() << "Process has been running for: " << callsToUpdateSecs << " seconds.";
-    }
-
     try {
         // GRAB FRAME
         cap >> src;
@@ -135,7 +130,6 @@ void imageProcessingWorker::process() {
             full_object_detection shape = pose_model(cimg, r);
             shapes.push_back(shape);
             if (togglePose->property("checked").toBool()) render_face(im, shape);
-            //render_face(im, shape);
 
             std::vector<cv::Point2d> image_points = get_2d_image_points(shape);
             double focal_length = im.cols;
@@ -156,7 +150,6 @@ void imageProcessingWorker::process() {
 
             cv::projectPoints(nose_end_point3D, rotation_vector, translation_vector, camera_matrix, dist_coeffs, nose_end_point2D);
             if (togglePose->property("checked").toBool()) cv::line(im,image_points[0], nose_end_point2D[0], cv::Scalar(255,0,0), 2);
-            //cv::line(im,image_points[0], nose_end_point2D[0], cv::Scalar(255,0,0), 2);
 
             poseEstimation = nose_end_point2D;
 
@@ -195,6 +188,9 @@ void imageProcessingWorker::process() {
             //cout << "Total Blinks: " << totalBlinks << endl;
 
         }
+
+        qDebug() << poseEstimation[0].x;
+        //outputPose->setProperty("text", QString::number(poseEstimation[0].x));
 
         // Display it all on the screen
         // Resize image for display

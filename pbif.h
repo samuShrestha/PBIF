@@ -25,8 +25,12 @@
 
 class PBIF : public QObject {
     Q_OBJECT
+signals:
+public slots:
 public:
+    // ==== APPLICATION ====
     explicit PBIF(QObject *parent = nullptr, QGuiApplication *app = nullptr, QQmlApplicationEngine *engine = nullptr);
+    ~PBIF();
     void exec();
     Q_INVOKABLE void exit();
 
@@ -35,43 +39,24 @@ public:
 
     void loadQMLComponents();
 
-    cv::VideoCapture cap; // Capture object to use w/ webcam
-
-    // Load face detection and pose estimation models.
-    dlib::frontal_face_detector detector = dlib::get_frontal_face_detector();
-    dlib::shape_predictor pose_model;
-
-    cv::Mat src, im;
-    cv::Mat im_small;
+    // ALGORITHM
     static cv::Mat im_display;
-
-    std::vector<dlib::rectangle> faces;
-
     static std::vector<cv::Point2d> poseEstimation;
 
-    int blinkFrameCount;
-    int totalBlinks;
-
-    double eyeAspectRatio(std::vector<cv::Point2d> eye);
-
-
 private:
+    bool stop;
+
     QGuiApplication* app;
     QQmlApplicationEngine* engine;
 
+    QTimer* processLoopTimer;
+
+
+    // ==== QML COMPONENTS ====
     QObject* webCam;
     QObject* togglePose;
     QObject* toggleEyes;
-
-    QTimer* processLoopTimer;
-
-    bool stop;
-
-signals:
-    void frameUpdated();
-public slots:
-    //void togglePose();
-    //void toggleEyeMarkers();
+    QObject* loadingMessage;
 };
 
 #endif // APP_H

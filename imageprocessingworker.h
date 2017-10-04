@@ -1,8 +1,9 @@
 #ifndef IMAGEPROCESSINGWORKER_H
 #define IMAGEPROCESSINGWORKER_H
 
-#include <QObject>
 #include <QDebug>
+#include <QObject>
+#include <QQmlApplicationEngine>
 #include <QString>
 #include <QTimer>
 
@@ -15,6 +16,8 @@
 #include <dlib/image_processing/render_face_detections.h>
 #include <dlib/image_processing.h>
 #include <dlib/gui_widgets.h>
+
+#include "pbif.h"
 
 class imageProcessingWorker : public QObject {
     Q_OBJECT
@@ -31,7 +34,7 @@ signals:
 
 // FUNCTIONS
 public:
-    imageProcessingWorker(QObject *webCam,  QObject *togglePose, QObject *toggleEyes);
+    imageProcessingWorker(QQmlApplicationEngine* engine);
     ~imageProcessingWorker();
 
 private:
@@ -43,12 +46,12 @@ public:
     static cv::Mat im_display;
     int totalBlinks;
 private:
+    // ==== QML COMPONENTS ====
     QObject* webCam;
     QObject* togglePose;
     QObject* toggleEyes;
 
-    int callsToUpdate = 0;
-    int callsToUpdateSecs = 0;
+    QObject* outputPose;
 
     // ==== TRACKING ====
     // Capture object to use w/ webcam

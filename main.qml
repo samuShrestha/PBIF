@@ -127,6 +127,7 @@ ApplicationWindow {
         anchors.top: parent.top
         anchors.right: navMenu.left
         anchors.bottom: parent.bottom
+        height: parent.height
         spacing: 0
 
         // ==================== WEBCAM VIEW ====================
@@ -206,6 +207,14 @@ ApplicationWindow {
                         border.color: "black"
                         border.width: 1
 
+                        // LOADING MESSAGE
+                        Text {
+                            id: webcamLoadingMessage
+                            objectName: "webcamLoadingMessage"
+                            anchors.centerIn: parent
+                            text: "Your webcam is currently loading..."
+                        }
+
                         WebCam{
                             id: webCamSource
                             objectName: "webCam"
@@ -239,6 +248,17 @@ ApplicationWindow {
 
                             //onClicked: checked ? pbif.displayEyeMarkers() : pbif.hideEyeMarkers()
                         }
+                    }
+                }
+
+                Column {
+                    anchors.bottom: root.bottom
+                    width: parent.width
+
+                    Text {
+                        id: outputPose
+                        objectName: "outputPose"
+                        text: "Pose Estimation: ~~~~"
                     }
                 }
 
